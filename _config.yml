@@ -22,8 +22,8 @@ description: 정리 및 공유용 블로그
 navbar-links:
   Home: ""
   Posts:
-    - Papers: "paperlist"
-  About Me: "aboutme"
+    - Papers: "paperlist.md"
+  About Me: "aboutme.md"
   #Resources:
   
     #- Beautiful Jekyll: "http://deanattali.com/beautiful-jekyll/"
