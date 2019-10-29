@@ -93,9 +93,15 @@ tags : [graphics, deeplearning]
     - 비압축성 유동(divergence-free)에 적합
   - $$L_G(\bold c) = \lVert \bold u_c - G(\bold c) \rVert_1​$$
     - 부분적으로 발산하는 모션 : 직접적 속도 추론이 더 좋은 근사임(curl 삭제)
+<<<<<<< HEAD:_posts/2019-10-29-Deep-Fluids.md
   - $$L_G(\bold c) = \lambda_\bold u \lVert \bold{u_c - \hat{u}_c} \rVert_1 + \lambda_{\nabla \bold u} \lVert \nabla\bold{u_c} - \nabla\bold{{\hat{u}_c}\rVert_1​$$ 
     - $$\hat{u}_c = \nabla \times G(\bold c)​$$ for 비압축성 유동
     - $$\hat{u}_c = G(\bold c)$$ for 압축성 유동
+=======
+  - $L_G(\bold c) = \lambda_\bold u \lVert \bold{u_c - \hat{u}_c} \rVert_1 + \lambda_{\nabla \bold u} \lVert \nabla\bold{u_c} - \nabla\bold{\hat{u}_c}\rVert_1​$ 
+    - $\hat{u}_c = \nabla \times G(\bold c)​$ for 비압축성 유동
+    - $\hat{u}_c = G(\bold c)$ for 압축성 유동
+>>>>>>> f7a01d6a5c117b3fc41f076df2dfba6b8b2ff521:_posts/2019-10-29-Deep-Fluids.md
 
 
 ### 3.2 Implementation
