@@ -22,7 +22,7 @@ baseurl: ""
 navbar-links:
   Home: ""
   Posts:
-    - Papers: "paperlist"
+    - Papers: "paperslist"
   About Me: "aboutme"
   #Resources:
   
