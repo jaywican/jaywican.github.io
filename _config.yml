@@ -20,9 +20,9 @@ baseurl: ""
 
 # List of links in the navigation bar
 navbar-links:
-  Home: ""
+  Home: "/"
   Posts:
-    - Papers: "paperslist"
+    - Papers: "paperlist"
   About Me: "aboutme"
   #Resources:
   
