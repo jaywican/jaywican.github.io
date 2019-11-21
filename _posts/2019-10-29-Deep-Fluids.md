@@ -79,10 +79,10 @@ tags : [graphics, deeplearning]
 
 ## 4. Extended Parameterizations
 
-- 매개변수 많은 장면은, 매개변수화 하기 어려울 수 있음
-  i.e. $$[\bf p_0, \bf p_1, \cdots, \bf p_t] \rightarrow \bf u_t$$ 
-  ​	$$\bf p_t$$ : smoke source position
-  ​	$$\bf u_t$$ : reconstructed velocity field at time $$t$$
+- 매개변수 많은 장면은, 매개변수화 하기 어려울 수 있음  
+  i.e. $$[\bf p_0, \bf p_1, \cdots, \bf p_t] \rightarrow \bf u_t$$  
+  ​	$$\bf p_t$$ : smoke source position  
+  ​	$$\bf u_t$$ : reconstructed velocity field at time $$t$$  
 
 - 프레임 수에 따라 매개변수 수가 선형적으로 늘어남 -> 매개변수 공간 : 데이터 중심의 접근 방식 불가능  
   
