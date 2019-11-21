@@ -54,7 +54,7 @@ tags : [graphics, deeplearning]
   - $$\bf u_c \in \mathbb{R}^{H\times W\times D \times V_{dim}}$$ : single velocity vector field frame in $$V_{dim}$$, height $$H$$, width $$W$$, depth $$D$$(1 for 2D)
   - $$\bf c = [c_1, c_2, \cdots , c_n] \in \mathbb{R}^n$$ : solver's parameters 
   ​	ex. 2D : $$c$$ = $$x$$ position, width(of smoke source), time(of frame) 의 combination
-  ​	나비에 스톡스 방정식의 비선형성 때문에, 이 세 parameters들은 매우 다른 속도 셋을 출력
+  ​	나비에 스톡스 방정식의 비선형성 때문에, 이 세 parameters들은 매우 다른 속도 셋을 출력  
 
 - 새로운 손실 함수
   - 유체역학 : 질량 보존(비압축성 흐름을 위한 divergence-free 모션을 보장하는 것)이 매우 중요함
@@ -83,7 +83,9 @@ tags : [graphics, deeplearning]
   i.e. $$[\bf p_0, \bf p_1, \cdots, \bf p_t] \rightarrow \bf u_t$$ 
   ​	$$\bf p_t$$ : smoke source position
   ​	$$\bf u_t$$ : reconstructed velocity field at time $$t$$
-- 프레임 수에 따라 매개변수 수가 선형적으로 늘어남 -> 매개변수 공간 : 데이터 중심의 접근 방식 불가능
+
+- 프레임 수에 따라 매개변수 수가 선형적으로 늘어남 -> 매개변수 공간 : 데이터 중심의 접근 방식 불가능  
+  
 - 따라서 $$G^\dagger(\bf u) : \mathbb{R}^{H\times W\times D \times V_{dim}} \mapsto \mathbb{R}^n$$ (인코더 구조)를 generator에 추가
   - 시간 통합을 위해 두 번 째 작은 네트워크와 결합
   - velocity field frames --> parameterizations $$\bf c = [\bf{z, p}] \in \mathbb{R}^n$$    : 매핑시킴
@@ -91,7 +93,7 @@ tags : [graphics, deeplearning]
     - $$\bf p \in \mathbb{R}^k$$ : supervised parameterization to control specific attributes (control vector)
     - separation은 훈련하는 동안 latent space를 sparse 하게 만듬 -> reconstruction quality 증가 **~~(왜??)~~**
       > i.e. moving smoke source example : $$n=16$$ & $$\bf p$$ encodes $$x, z$$ positions 
-
+  
 - $$L_{AE}(\bf u) = \lambda_\bf u \lVert \bf{u_c - \hat{u}_c} \rVert_1 + \lambda_{\nabla \bf u} \lVert \nabla\bf{u_c} - \nabla\bf{\hat{u}_c}\rVert_1 + \lambda_\bf p \lVert \bf p - \bf{\hat p} \rVert^2_2$$ 
   - $$\hat{\bf p}$$ : part of the latent space vector constrained to represent control parameters $$\bf p$$
   - 속도 장의 상태가 나머지 latent space의 dim $$\bf z$$ 로 표시되므로 복잡한 매개변수화 처리 가능
