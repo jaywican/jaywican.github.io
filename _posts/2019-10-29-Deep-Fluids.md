@@ -7,7 +7,7 @@ tags : [graphics, deeplearning]
 # Deep Fluids: A Generative Network for Parameterized Fluid Simulations
 
 > Byungsoo Kim et al.
-
+---
 ## 필수 Background
 
 - 오토인코더(Auto Encoder)
@@ -17,7 +17,7 @@ tags : [graphics, deeplearning]
 - Latent space
 - Parametrization
 
-
+---
 ## Abstract
 ### Figure1
 
@@ -31,6 +31,7 @@ tags : [graphics, deeplearning]
 - 다양한 응용 분야 : 시뮬레이션의 빠른 구성, 다양한 매개변수를 사용한 fluids 보간, 시간 re-샘플링, latent space 시뮬레이션, fluid 시뮬레이션 데이터 압축 등.
 - 합성된 속도장 : CPU solver 사용해서 재 시뮬레이션 하여 얻는 것 보다 700 배 빠르고, 1300배의 압축률.\\\\
 
+---
 ## 1. Introduction
 
 - reduced parameters 로부터 dynamic Eulerian fluids 시뮬레이션 속도를 완전히 구성하는 첫 생성 모델 네트워크이다.
@@ -42,11 +43,13 @@ tags : [graphics, deeplearning]
   - 오토인코더 구조를 통해 시뮬레이션 클래스들을 latent space representation으로 인코딩 하는 접근 방식 :  latent space 통합 네트워크와 결합하여 **시간을 앞당기고(?)** fluid 시뮬레이션과의 유연한 인터렉션 가능하게 한다.
   - 훈련 데이터와 직접적 연관이 있고, parameter space의 중간 지점인 샘플들을 재구성 할때 제안 된 방법에 대한 자세한 분석.
 
+---
 ## 3. A Generative Model For Fluids
 
 - 목표 : 원래의 속도장 데이터 셋을 근사하는 CNN 훈련시키는 것
   -> CNN : loss function 최소화 함으로써, data manifold를 shift-invariant feature map으로 구성함
 - 입력값 : 매개변수화 가능한(parameterizable) 데이터 셋
+
 
 ### 3.1 Loss Function for Velocity Reconstruction
 
@@ -77,6 +80,7 @@ tags : [graphics, deeplearning]
 - 초기 파라미터 $$\bf c$$  -> $$m$$-dim 가중치 벡터 $$\bf m$$ (by fc 레이어)
 - ![Image Alt 1](https://jaywican.github.io/img/deepfluids1.jpg)
 
+---
 ## 4. Extended Parameterizations
 
 - 매개변수 많은 장면은, 매개변수화 하기 어려울 수 있음  
@@ -129,6 +133,7 @@ tags : [graphics, deeplearning]
     - compute $$\bf c_{t+1} = [\bf z_{t+1};\bf p_{t+1}]$$ 
     - reconstruct velocity field $$\bf u_{t+1}$$ by $$G(\bf c_{t+1})$$ 
 
+---
 ## 5. Results
 
 - velocity fields - smoke simulations / advect densities - surfaces for liquids

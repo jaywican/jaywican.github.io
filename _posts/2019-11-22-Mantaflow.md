@@ -10,7 +10,8 @@ tags : [mantaflow, graphics]
 유체 시뮬레이션 프레임워크  
 > 설치 시 읽어보면 좋을 [가이드](http://www.programmersought.com/article/4597155267/)  
   
-  
+---  
+---
   
 # 2. 해결한 오류들
 > Windows10, 64bit 기준
@@ -35,7 +36,7 @@ list(APPEND F_LIBS ${PYTHON_LIBRARY})
 
 QT 및 cmkae 빌더 설정할때도 비트 설정 잘 맞춰야 나중에 빌드 시 꼬이지 않음.  
   
-  
+---  
 
 ## 2. python37_d.lib(python37_d.dll) 파일 찾을 수 없습니다.
 
@@ -45,7 +46,8 @@ pyconfig.h 들어가서 해당부분 주석처리 하기
 if defined(_DEBUG)  
 //pragma comment(lib,"python37_d.lib")
 ```
-  
+
+---  
 
 ## 3. .obj 파일 외부 기호 참조 오류
 ```
@@ -61,6 +63,7 @@ public: struct _object * __cdecl Pb::WrapperRegistry::initModule(void)" (?initMo
 ```
 > [참고 글](https://codeday.me/ko/qa/20190827/1370305.html)
   
+---
 
 ## 4. .obj 파일 : 'x64' 모듈 컴퓨터 종류가 'x86' 대상 컴퓨터 종류와 충돌합니다
 
@@ -68,7 +71,8 @@ public: struct _object * __cdecl Pb::WrapperRegistry::initModule(void)" (?initMo
 1) qt 설치 시 MSVS 버전 맞추고, 64bit 로 설치
 2) cmake로 파일 만들때 generator 설정 64bit로 하기
   
-  
+---
+
 ## 5. manta.exe 실행 시 no module named 'encodings'
 ```
 fatal python error : py_initialize: unable to load the file system codec
