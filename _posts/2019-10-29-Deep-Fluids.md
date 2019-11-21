@@ -72,11 +72,11 @@ tags : [graphics, deeplearning]
 
 ### 3.1 Loss Function for Velocity Reconstruction
 
-- 네트워크 입력 : $$[ \bold u_c, \bold c ]$$
+- 네트워크 입력 : $$[ \bf u_c, \bf c ]$$
 
-  - $$\bold u_c \in \mathbb{R}^{H\times W\times D \times V_{dim}}$$ : single velocity vector field frame in $$V_{dim}$$, height $$H$$, width $$W$$, depth $$D$$(1 for 2D)
+  - $$\bf u_c \in \mathbb{R}^{H\times W\times D \times V_{dim}}$$ : single velocity vector field frame in $$V_{dim}$$, height $$H$$, width $$W$$, depth $$D$$(1 for 2D)
 
-  - $$\bold c = [c_1, c_2, \cdots , c_n] \in \mathbb{R}^n$$ : solver's parameters 
+  - $$\bf c = [c_1, c_2, \cdots , c_n] \in \mathbb{R}^n$$ : solver's parameters 
 
   ​	ex. 2D : $$c$$ = $$x$$ position, width(of smoke source), time(of frame) 의 combination
 
@@ -87,27 +87,27 @@ tags : [graphics, deeplearning]
 - 새로운 손실 함수
 
   - 유체역학 : 질량 보존(비압축성 흐름을 위한 divergence-free 모션을 보장하는 것)이 매우 중요함
-  - $$L_G(\bold c) = \lVert \bold u_c - \nabla \times G(\bold c) \rVert_1$$
-    - $$G(\bold c) : \mathbb{R}^n \mapsto \mathbb{R}^{H\times W\times D \times G_{dim}} $$  : 네트워크 output
-    - $$\nabla \times G(\bold c)$$ : reconstruction 타겟, divergence-free 보장됨
+  - $$L_G(\bf c) = \lVert \bf u_c - \nabla \times G(\bf c) \rVert_1$$
+    - $$G(\bf c) : \mathbb{R}^n \mapsto \mathbb{R}^{H\times W\times D \times G_{dim}} $$  : 네트워크 output
+    - $$\nabla \times G(\bf c)$$ : reconstruction 타겟, divergence-free 보장됨
     - 비압축성 유동(divergence-free)에 적합
-  - $$L_G(\bold c) = \lVert \bold u_c - G(\bold c) \rVert_1$$
+  - $$L_G(\bf c) = \lVert \bf u_c - G(\bf c) \rVert_1$$
     - 부분적으로 발산하는 모션 : 직접적 속도 추론이 더 좋은 근사임(curl 삭제)
-  - $$L_G(\bold c) = \lambda_\bold u \lVert \bold{u_c - \hat{u}_c} \rVert_1 + \lambda_{\nabla \bold u} \lVert \nabla\bold{u_c} - \nabla\bold{\hat{u}_c}\rVert_1$$ 
-    - $$\hat{u}_c = \nabla \times G(\bold c)$$ for 비압축성 유동
-    - $$\hat{u}_c = G(\bold c)$$ for 압축성 유동
-  - $L_G(\bold c) = \lambda_\bold u \lVert \bold{u_c - \hat{u}_c} \rVert_1 + \lambda_{\nabla \bold u} \lVert \nabla\bold{u_c} - \nabla\bold{\hat{u}_c}\rVert_1$ 
-    - $\hat{u}_c = \nabla \times G(\bold c)$ for 비압축성 유동
-    - $\hat{u}_c = G(\bold c)$ for 압축성 유동
+  - $$L_G(\bf c) = \lambda_\bf u \lVert \bf{u_c - \hat{u}_c} \rVert_1 + \lambda_{\nabla \bf u} \lVert \nabla\bf{u_c} - \nabla\bf{\hat{u}_c}\rVert_1$$ 
+    - $$\hat{u}_c = \nabla \times G(\bf c)$$ for 비압축성 유동
+    - $$\hat{u}_c = G(\bf c)$$ for 압축성 유동
+  - $L_G(\bf c) = \lambda_\bf u \lVert \bf{u_c - \hat{u}_c} \rVert_1 + \lambda_{\nabla \bf u} \lVert \nabla\bf{u_c} - \nabla\bf{\hat{u}_c}\rVert_1$ 
+    - $\hat{u}_c = \nabla \times G(\bf c)$ for 비압축성 유동
+    - $\hat{u}_c = G(\bf c)$ for 압축성 유동
 
 
 ### 3.2 Implementation
 
 - 구조 : BEGAN 구조 차용
 
-- 초기 파라미터 $$\bold c$$  -> $$m$$-dim 가중치 벡터 $$\bold m$$ (by fc 레이어)
+- 초기 파라미터 $$\bf c$$  -> $$m$$-dim 가중치 벡터 $$\bf m$$ (by fc 레이어)
 
-- <img src="/img/deepfluids1.png" width="600px">
+- <img src="img/deepfluids1.jpg" width="600px">
 
   
 
@@ -115,29 +115,29 @@ tags : [graphics, deeplearning]
 
 - 매개변수 많은 장면은, 매개변수화 하기 어려울 수 있음
 
-  i.e. $$[\bold p_0, \bold p_1, \cdots, \bold p_t] \rightarrow \bold u_t$$ 
+  i.e. $$[\bf p_0, \bf p_1, \cdots, \bf p_t] \rightarrow \bf u_t$$ 
 
-  ​	$$\bold p_t$$ : smoke source position
+  ​	$$\bf p_t$$ : smoke source position
 
-  ​	$$\bold u_t$$ : reconstructed velocity field at time $$t$$
+  ​	$$\bf u_t$$ : reconstructed velocity field at time $$t$$
 
 - 프레임 수에 따라 매개변수 수가 선형적으로 늘어남 -> 매개변수 공간 : 데이터 중심의 접근 방식 불가능
 
-- 따라서 $$G^\dagger(\bold u) : \mathbb{R}^{H\times W\times D \times V_{dim}} \mapsto \mathbb{R}^n$$ (인코더 구조)를 generator에 추가
+- 따라서 $$G^\dagger(\bf u) : \mathbb{R}^{H\times W\times D \times V_{dim}} \mapsto \mathbb{R}^n$$ (인코더 구조)를 generator에 추가
   - 시간 통합을 위해 두 번 째 작은 네트워크와 결합
-  - velocity field frames --> parameterizations $$\bold c = [\bold{z, p}] \in \mathbb{R}^n$$    : 매핑시킴
-    - $$\bold z \in \mathbb{R}^{n-k}$$ : reduced latent space(=flow의 임의의 features를 만드는 in unsupervised way) (latent vector)
+  - velocity field frames --> parameterizations $$\bf c = [\bf{z, p}] \in \mathbb{R}^n$$    : 매핑시킴
+    - $$\bf z \in \mathbb{R}^{n-k}$$ : reduced latent space(=flow의 임의의 features를 만드는 in unsupervised way) (latent vector)
 
-    - $$\bold p \in \mathbb{R}^k$$ : supervised parameterization to control specific attributes (control vector)
+    - $$\bf p \in \mathbb{R}^k$$ : supervised parameterization to control specific attributes (control vector)
 
     - separation은 훈련하는 동안 latent space를 sparse 하게 만듬 -> reconstruction quality 증가 **~~(왜??)~~**
 
-      > i.e. moving smoke source example : $$n=16$$ & $$\bold p$$ encodes $$x, z$$ positions 
+      > i.e. moving smoke source example : $$n=16$$ & $$\bf p$$ encodes $$x, z$$ positions 
 
-- $$L_{AE}(\bold u) = \lambda_\bold u \lVert \bold{u_c - \hat{u}_c} \rVert_1 + \lambda_{\nabla \bold u} \lVert \nabla\bold{u_c} - \nabla\bold{\hat{u}_c}\rVert_1 + \lambda_\bold p \lVert \bold p - \bold{\hat p} \rVert^2_2$$ 
+- $$L_{AE}(\bf u) = \lambda_\bf u \lVert \bf{u_c - \hat{u}_c} \rVert_1 + \lambda_{\nabla \bf u} \lVert \nabla\bf{u_c} - \nabla\bf{\hat{u}_c}\rVert_1 + \lambda_\bf p \lVert \bf p - \bf{\hat p} \rVert^2_2$$ 
 
-  - $$\hat{\bold p}$$ : part of the latent space vector constrained to represent control parameters $$\bold p$$
-  - 속도 장의 상태가 나머지 latent space의 dim $$\bold z$$ 로 표시되므로 복잡한 매개변수화 처리 가능
+  - $$\hat{\bf p}$$ : part of the latent space vector constrained to represent control parameters $$\bf p$$
+  - 속도 장의 상태가 나머지 latent space의 dim $$\bf z$$ 로 표시되므로 복잡한 매개변수화 처리 가능
   - 시간 차원을 매개변수로 explicitly 하게 인코딩 하지 않는 latent space 사용 가능
   - 대신에, 적절한 latent codes의 sequence를 생성하는 두 번째 latent space integration network 사용
 
@@ -145,41 +145,41 @@ tags : [graphics, deeplearning]
 
 ### 4.1 Latent Space Integration Network
 
-- latent space : velocity field states $$\bold z$$ 에 의해 오직 시간의 확산 표현만 학습
+- latent space : velocity field states $$\bf z$$ 에 의해 오직 시간의 확산 표현만 학습
 - reduced representation 로부터 시간을 앞당기는 latent space integration network 제안
 
-<img src="/img/deepfluids2.png" width="500px">
+<img src="img/deepfluids2.jpg" width="500px">
 
-- $$T(\bold x_t) : \mathbb{R}^{n+k} \mapsto \mathbb{R}^{n-k}$$
-  - $$\bold x_t = [\bold{c_t} ; \Delta\bold{p_t}] \in \mathbb{R}^{n+k}$$ : input vector (concatenation of $$\bold c_t$$ and $$\Delta \bold p_t$$)
-    - $$\bold c_t$$ : latent code at current time t
-    - $$\Delta\bold{p_t}=\bold p_{t+1} - \bold p_t \in \mathbb{R}^k$$ : control vector difference bet user input parameters
-  - output of $$T(\bold x_t)$$ : residual $$\Delta \bold z_t$$ bet two consecutive states
+- $$T(\bf x_t) : \mathbb{R}^{n+k} \mapsto \mathbb{R}^{n-k}$$
+  - $$\bf x_t = [\bf{c_t} ; \Delta\bf{p_t}] \in \mathbb{R}^{n+k}$$ : input vector (concatenation of $$\bf c_t$$ and $$\Delta \bf p_t$$)
+    - $$\bf c_t$$ : latent code at current time t
+    - $$\Delta\bf{p_t}=\bf p_{t+1} - \bf p_t \in \mathbb{R}^k$$ : control vector difference bet user input parameters
+  - output of $$T(\bf x_t)$$ : residual $$\Delta \bf z_t$$ bet two consecutive states
 
-    - $$\bold z_{t+1} = \bold z_t + T(\bold x_t)$$ : new latent code
+    - $$\bf z_{t+1} = \bf z_t + T(\bf x_t)$$ : new latent code
   - $$T$$ : multilayer perceptron network (3 FC layer + ELU)
     - navigator on the manifold of the latent space
     - controlled individual steps (rather than physically induced)
-- $$L_T(\bold x_t, \cdots, \bold x_{t+w-1}) = \frac{1}{w} \sum_{i=t}^{t+w-1} \lVert \Delta \bold z_i - T_i \rVert_2^2$$
+- $$L_T(\bf x_t, \cdots, \bf x_{t+w-1}) = \frac{1}{w} \sum_{i=t}^{t+w-1} \lVert \Delta \bf z_i - T_i \rVert_2^2$$
   - window of $$w$$ sequential latent codes with an $$L_2$$ loss function
 
   - $$T_i$$ : recursively computed from $$t$$ to $$i$$ 
 
     
 
-<img src="/img/deepfluids3.png" width="500px" />
+<img src="img/deepfluids3.jpg" width="500px">
 
   - 순서
 
-    - initial incompressible velocity field($$\bold{u_0}$$) -> initial reduced space($$\bold{c_0}$$) by $$G^\dagger(\bold{c_0})$$ 
+    - initial incompressible velocity field($$\bf{u_0}$$) -> initial reduced space($$\bf{c_0}$$) by $$G^\dagger(\bf{c_0})$$ 
 
-    - concatenating : reduced space($$\bold c_t$$) + position update($$\Delta \bold p_t$$) -> $$\bold x_t$$
+    - concatenating : reduced space($$\bf c_t$$) + position update($$\Delta \bf p_t$$) -> $$\bf x_t$$
 
-    - compute $$\bold z_{t+1} $$ by latent space integration network $$T$$  ($$\bold z_{t+1} = \bold z_t + T(\bold x_t)$$ )
+    - compute $$\bf z_{t+1} $$ by latent space integration network $$T$$  ($$\bf z_{t+1} = \bf z_t + T(\bf x_t)$$ )
 
-    - compute $$\bold c_{t+1} = [\bold z_{t+1};\bold p_{t+1}]$$ 
+    - compute $$\bf c_{t+1} = [\bf z_{t+1};\bf p_{t+1}]$$ 
 
-    - reconstruct velocity field $$\bold u_{t+1}$$ by $$G(\bold c_{t+1})$$ 
+    - reconstruct velocity field $$\bf u_{t+1}$$ by $$G(\bf c_{t+1})$$ 
 
       
 
@@ -195,7 +195,7 @@ tags : [graphics, deeplearning]
 
   5 samples with varying source widths $$w$$  &
 
-  21 samples with varying $$x$$ positions $$\bold p_x$$ 
+  21 samples with varying $$x$$ positions $$\bf p_x$$ 
 
 - each simulations : 200 frames / grid resolutions 96 x 128 / domain size (1, $$1.\overline{33}$$)
 - trained total 21,000 unique velocity field samples
