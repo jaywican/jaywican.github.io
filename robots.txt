@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 User-agent: *
 Allow: /
 
+=======
+User-agent: *
+Allow: /
+
+>>>>>>> 447b1baf420bf398192a9d7db2f4b2824b096d10
 Sitemap: https://jaywican.github.io/sitemap.xml
